@@ -7,6 +7,10 @@ const BooksContext = createContext();
 function Provider({children}){
     const [books,setBooks] = useState([]);
 
+    //Se utiliza useCallback para que no entre en un loop infinito 
+    //ek useEffect de App. Ya que por cada renderización se asociaría una nueva
+    //arrow function y en sí siempre es la misma. 
+    //SOLUCIÓN AL WARNING DE esLint . UseEffect has missing dependencies
     const fetchBooks = useCallback(async () =>{
         const {data} = await axios.get('http://localhost:3001/books');
         setBooks(data);
